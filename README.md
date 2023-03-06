@@ -1,36 +1,70 @@
-# gpt4rstudio
+# gpt4r
 
-## 1. Main Idea
+Tools to easier use OpenAI's interface for ChatGPT from R.
 
-The package creates RStudio Addins that help using Chat-GPT. These Addins can perform operations on selected text in your active document and insert the results in the same document or a new one. The package comes with 3 addins aimed to improve text (`GPT rewrite` and `GPT suggest`) or to improve, comment or translate to R code (`GPT code`). 
+This package is mainly used by the [mygpt package](https://github.com/skranz/mygpt) for customizable ChatGPT addins in RStudio. 
 
-The key feature of gpt4rstudio is that you can customize Addins by editing YAML templates that specify the ChatGPT prompt and how results are presented in RStudio. Advanced users can build their R package that specifies Addins based on 'gpt4rstudio' functionality.
+But you can also use it directly. Here is a short example:
 
-The Chat-GPT interaction is logged in a local folder by default. This feature could be useful for students who need to account for Chat-GPT usage in a thesis.
+```r
+library(gpt4r)
 
-## 2. Installation
+prompt = "Below you find a task for a student, a sample solution and the answer by the student. Please evaluate the student's answer based on the sample solution.
+
+TASK FOR STUDENT:
+
+{{task}}
+
+SAMPLE SOLUTION:
+
+{{solution}}
+
+STUDENT'S ANSWER:
+
+{{answer}}
+"
+
+
+# Create template from prompt above and run it
+tpl = new_gtp_tpl(prompt=prompt, temperature = 0.9)
+
+# One example for the template
+task = "Describe all information given about Germany in the tex we read in our lecture."
+
+solution = "It is a founding member of the EU since 1958. Its population is roughly 80 million. Longest chancellor after the 2nd world war was Helmut Kohl (16 years), longest chancellor overall was Bismarck (22 years)"
+
+answer = "Germany is the biggest country in Europe and member of the EU. Chancellor for the longest time was Helmut Kohl."
+
+values = list(task=task, solution=solution, answer=answer)
+
+# Set OpenAI API key and run the template  
+
+Sys.setenv(OPENAI_API_KEY = "XX-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
+res = run_gpt_with_tpl(tpl, values)
+
+# The output
+res$output
+
+# Alternative: just generate prompt and copy to clipboard
+# Can be used in web interface of ChatGPT or BingGPT
+
+get_gpt_prompt(tpl, values, to_clipboard=TRUE)
+
+# Currently (2023-03-6) BingChat provides a much better result for this task
+# than the ChatGPT API.
+# But thinks will probably change.
+
+```
+
+
+## Installation
 
 Via r-universe:
 
-## 3. Alternative use: Just copy prompts for ChatGPT
-
-If you don't want yet to use an OpenAI API key (see below), you can use the package to copy prompts to the clipboard that you can then manually paste in ChatGPT's (or Bing Chat's) web interface.
-
-To do so set it is as the default option by calling
-
-```r
-set_gpt_default_action("copy_prompt")
-```
-
-To revert to the default, i.e. running OpenAI's API, call:
-
-```r
-set_gpt_default_action("run")
-```
 
 ## 4. OpenAI API Key
 
-To properly use the package, you should set up your OpenAI API key in R.
+To directly use the OpenAI API you have to set up your OpenAI API key in R.
 
 1. You need to [sign-up to OpenAI](https://platform.openai.com/signup). You probably can first test the API for a limited time and volume free of charge.
 

@@ -32,10 +32,10 @@ STUDENT'S ANSWER:
 }
 
 
-get_gpt_prompt = function(tpl, values, to.clipboard=TRUE) {
+get_gpt_prompt = function(tpl, values, to_clipboard=TRUE) {
   restore.point("get_gpt_prompt")
   prompt = glue_text(tpl$prompt, values)
-  if (to.clipboard) {
+  if (to_clipboard) {
     clipr::write_clip(prompt)
     cat("\n",prompt,"\n")
     cat("\n\n---The prompt above was copied to the clipboard ---\n\n")
