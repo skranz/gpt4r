@@ -83,9 +83,10 @@ run_tpl_addin <- function(tpl_name, pkg = "mygpt", tpl_dir = system.file("templa
     return(invisible())
   }
 
-
+  #stop()
   # Apply the addin function.
   resp <- run_gpt_with_tpl(tpl,values=list(text=text))
+
 
   out = resp$output
   present_text = present_addin_results(doc_context,tpl,text,out)
@@ -97,7 +98,7 @@ run_tpl_addin <- function(tpl_name, pkg = "mygpt", tpl_dir = system.file("templa
   clip.txt = NULL
   if (isTRUE(tpl$to_clipboard == "prompt")) {
       clip.txt = prompt
-  } else if (tpl$to_clipboard == "output") {
+  } else if (isTRUE(tpl$to_clipboard == "output")) {
     clip.txt = out
   }
   if (!is.null(clip.txt)) {

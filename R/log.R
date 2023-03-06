@@ -1,5 +1,6 @@
 log_gpt_call = function(tpl, input, output, present_text) {
   restore.point("log_gpt_call")
+  #stop()
   if (!isTRUE(tpl$do_log)) {
     cat("\nGPT call not logged.")
     return(FALSE)
