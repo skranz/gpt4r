@@ -32,7 +32,16 @@ run_tpl_addin <- function(tpl_name, pkg = "mygpt", tpl_dir = system.file("templa
   setwd(dir)
 
   tpl = parse_gpt_tpl(tpl_file)
-  tpl = set_gpt_tpl_defaults(tpl)
+
+  # Check if default.tpl exist in template dir
+  default_file = file.path(tpl_dir,"default.yml")
+  if (file.exists(default_file)) {
+    default_tpl = yaml::read_yaml(default_file)
+  } else {
+    default_tpl = default_gpt_tpl()
+  }
+
+  tpl = set_gpt_tpl_defaults(tpl, default_tpl)
 
   ext = tools::file_ext(doc_context$path)
   if (length(tpl$only_files)>0) {
@@ -63,8 +72,8 @@ run_tpl_addin <- function(tpl_name, pkg = "mygpt", tpl_dir = system.file("templa
   } else {
     just.prompt = FALSE
   }
+  prompt = glue_text(tpl$prompt, list(text=text))
   if (just.prompt) {
-    prompt = glue_text(tpl$prompt, list(text=text))
     cat(paste0("\n The prompt is:\n\n",prompt))
     try({
       clipr::write_clip(prompt)
@@ -83,7 +92,7 @@ run_tpl_addin <- function(tpl_name, pkg = "mygpt", tpl_dir = system.file("templa
 
   # Create a log so that later students can easily show
   # how they used chat-gpt
-  log_gpt_call(tpl, , out,present_text)
+  log_gpt_call(tpl, text, out,present_text)
 
   clip.txt = NULL
   if (isTRUE(tpl$to_clipboard == "prompt")) {
