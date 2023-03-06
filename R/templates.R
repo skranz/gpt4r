@@ -22,7 +22,7 @@ STUDENT'S ANSWER:
   answer = "Germany is the biggest country in Europe and member of the EU. Chancellor for the longest time was Helmut Kohl."
 
   tpl = new_gtp_tpl(prompt=prompt, temperature = 0.9)
-  key = get_openai_key(dir="C:/libraries/gpt4rstudio")
+  key = get_openai_key(dir="C:/libraries/gpt4r")
   values = list(task=task, solution=solution, answer=answer)
   res = run_gpt_with_tpl(tpl, values)
 

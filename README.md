@@ -39,14 +39,17 @@ values = list(task=task, solution=solution, answer=answer)
 
 # Set OpenAI API key and run the template  
 
-Sys.setenv(OPENAI_API_KEY = "XX-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
+# Adapt key
+# Sys.setenv(OPENAI_API_KEY = "XX-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
+
 res = run_gpt_with_tpl(tpl, values)
 
 # The output
 res$output
 
 # Alternative: just generate prompt and copy to clipboard
-# Can be used in web interface of ChatGPT or BingGPT
+# Can be used in web interface of ChatGPT or Bing Chat
+# Works without OpenAI API key
 
 get_gpt_prompt(tpl, values, to_clipboard=TRUE)
 
@@ -61,6 +64,9 @@ get_gpt_prompt(tpl, values, to_clipboard=TRUE)
 
 Via r-universe:
 
+```r
+install.packages('gpt4r', repos = c('https://skranz.r-universe.dev', 'https://cloud.r-project.org'))
+```
 
 ## 4. OpenAI API Key
 
