@@ -1,0 +1,43 @@
+label: Suggest Improvement
+system: You are a helpful assisstant.
+
+prompt: |
+  Write down an improved version of the following text and then explain concretely the different improvements and their rationale; keep all links:
+  {text}
+
+# Parameter passed to the OpenAI API
+parameter:
+  temperature: 0.8
+
+# Specifies how the input and output will be presented in RStudio
+present:
+  # 3 options:
+  # "inline" replace the selected text (input) in the active document
+  # "new_file" create a new file, save text and open it
+  # "open_doc" open a new document in RStudio but don't save it
+  where: open_doc
+  # if where = "new_file" the file extension
+  ext: Rmd
+  # what and in which order will input and
+  # output be shown. Possible values:
+  # input-output
+  # output-input
+  # input
+  # output
+  show: input-output
+  input_header: "# Original text\n\n"
+
+  input_footer: ""
+  input_line_prefix: "    "
+  output_header: "\n# ChatGPT's Answer\n\n"
+  output_footer: ""
+
+# What is shown on the R console
+console:
+  show_before: |
+    Task for ChatGPT: {tpl$prompt}
+
+    ...waiting for the answer...
+
+  show_after: ""
+

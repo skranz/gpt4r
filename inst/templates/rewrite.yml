@@ -1,0 +1,44 @@
+label: Rewrite Text
+system: You are a helpful assisstant.
+prompt: |
+  Improve the language of the following text, and, if possible, shorten it a bit but keep all content:
+
+  {text}
+parameter:
+  temperature: 0.8
+
+only_files: [rmd, txt, md, html]
+
+# Specifies how the input and output will be presented in RStudio
+present:
+  # 3 options:
+  # "inline" replace the selected text (input) in the active document
+  # "new_file" create a new file, save text and open it
+  # "open_doc" open a new document in RStudio but don't save it
+  where: inline
+  # if where = "new_file" the file extension
+  ext: ""
+  # what and in which order will input and
+  # output be shown. Possible values:
+  # input-output
+  # output-input
+  # input
+  # output
+  show: input-output
+  input_header: "\n### Original text\n\n"
+
+  input_footer: ""
+  input_line_prefix: "    "
+  output_header: "\n### ChatGPT's Version\n\n"
+  output_footer: |
+
+    ### END
+
+# What is shown on the R console
+console:
+  show_before: |
+    Task for ChatGPT: {tpl$prompt}
+
+    ... wait for answer ...
+
+  show_after: ""

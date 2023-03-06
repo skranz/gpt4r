@@ -1,0 +1,16 @@
+Package: gpt4r
+Type: Package
+Title: ChatGPT templates for use in R and via mygpt in RStudio.
+Version: 0.1.0
+Author: Sebastian Kranz
+Maintainer: Sebastian Kranz <sebastian.kranz@uni-ulm.de>
+Description:
+  Tools to use ChatGPT via YAML templates
+  Typically used with mygpt to create customized RStudio Addins
+  User can experiment with Chat-GPT inclusion by adapting YAML templates.
+  By default ChatGPT usage will be logged in a local folder.
+  Originally inspired by https://github.com/jcrodriguez1989/chatgpt
+Depends: rstudioapi, restorepoint, httr, jsonlite, yaml, glue, stringtools, clipr
+License: GPL >= 3.0
+Encoding: UTF-8
+LazyData: true
