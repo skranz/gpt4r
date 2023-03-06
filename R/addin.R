@@ -60,6 +60,8 @@ run_tpl_addin <- function(tpl_name, pkg = "mygpt", default_tpl_dir = system.file
   } else if (is.null(api.key)) {
     just.prompt = TRUE
     cat("\nSince no OpenAI API key was set, I will just copy the prompt in the clipboard. You can manually paste it on the ChatGPT or Bing Chat Webinterface.")
+  } else {
+    just.prompt = FALSE
   }
   if (just.prompt) {
     prompt = glue_text(tpl$prompt, list(text=text))
