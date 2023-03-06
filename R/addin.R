@@ -2,7 +2,7 @@
 #' Run a ChatGPT RStudio Addin
 #'
 #' @param tpl_name Name of the tpl to execute.
-run_tpl_addin <- function(tpl_name, pkg = "mygpt", default_tpl_dir = system.file("templates", package=pkg)) {
+run_tpl_addin <- function(tpl_name, pkg = "mygpt", tpl_dir = system.file("templates", package=pkg)) {
   library(gpt4r)
   require(pkg, character.only=TRUE)
 
@@ -22,7 +22,7 @@ run_tpl_addin <- function(tpl_name, pkg = "mygpt", default_tpl_dir = system.file
   # If a template with same name exists in
   # directory of document use that template
   # otherwise take from package.
-  tpl_file = find_tpl_file(tpl_name, dir, default_tpl_dir)
+  tpl_file = find_tpl_file(tpl_name, dir, tpl_dir)
 
   if (is.null(tpl_file)) {
     cat(paste0("\nCould not find template file ", tpl_name,".yml"))
@@ -85,5 +85,14 @@ run_tpl_addin <- function(tpl_name, pkg = "mygpt", default_tpl_dir = system.file
   # how they used chat-gpt
   log_gpt_call(tpl, , out,present_text)
 
+  clip.txt = NULL
+  if (isTRUE(tpl$to_clipboard == "prompt")) {
+      clip.txt = prompt
+  } else if (tpl$to_clipboard == "output") {
+    clip.txt = out
+  }
+  if (!is.null(clip.txt)) {
+    try(clipr::write_clip(clip.txt))
+  }
   invisible(NULL)
 }
